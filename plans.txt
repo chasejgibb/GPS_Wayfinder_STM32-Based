@@ -1,0 +1,67 @@
+PC0:  GPS RX
+PC1:  GPS TX
+PA0:  LED1 TIM2_CH1 (north)
+PA5:  LED2 (home)
+PA1:  LED3 TIM2_CH2 (east)
+PB10: LED4 TIM2_CH3 (south)
+PB11: LED5 TIM2_CH4 (west)
+PC2: JOY_X ADC1_IN3
+PC3: JOY_Y ADC1_IN4
+
+
+
+what we need: 
+READ GPS data, parse raw text into coordinates
+make X+ X- Y+ Y- boundaries for virutal map
+
+
+functions:
+GetGPS() // parse GPS string
+MakeMap() // take GPS curr coords and xlim = ylim = curr + and - 50?
+SetHome() // read GPS coords, set as new x = y = 0, and call MakeMap()
+MoveCharacter() // move character in virtual map. involves ADC, and 
+CmpCurrHome() // compare coords to find x and y difference, feed into BlinkLEDs()
+BinkLEDs(double x, double y) // based on + and - values of inputs, turn on LEDs 1-5. If x and y are close to zero, then turn on LED_HOME. Will involve PWM.
+
+
+MAIN CODE:
+
+
+int main(void)
+{
+  HAL_Init();
+
+  SystemClock_Config();
+  PeriphCommonClock_Config();
+
+  MX_GPIO_Init();
+  MX_ADC1_Init();
+  MX_ADC2_Init();
+  MX_TIM2_Init();
+
+  /* USER CODE BEGIN 2 */
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+  HAL_TIM_Base_Start_IT(&htim2); // start timer 16
+  SetHome();
+  /* USER CODE END 2 */
+
+  while (1)
+  {
+    /* USER CODE BEGIN WHILE */
+
+    if (HAL_GPIO_ReadPin(JOY_PUSH_GPIO_Port, JOY_PUSH_Pin) == 0){
+    	SetHome();
+    	HAL_Delay(10);
+    }
+    MoveCharacter();
+    BlinkLEDs();
+    
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+    /* USER CODE END 3 */
+  }
+}

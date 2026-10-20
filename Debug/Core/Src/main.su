@@ -1,0 +1,17 @@
+../Core/Src/main.c:101:5:main	8	static
+../Core/Src/main.c:142:6:SystemClock_Config	96	static
+../Core/Src/main.c:191:6:PeriphCommonClock_Config	144	static
+../Core/Src/main.c:217:13:MX_ADC1_Init	48	static
+../Core/Src/main.c:284:13:MX_ADC2_Init	32	static
+../Core/Src/main.c:342:13:MX_TIM2_Init	64	static
+../Core/Src/main.c:413:13:MX_USART1_UART_Init	8	static
+../Core/Src/main.c:448:13:MX_GPIO_Init	48	static
+../Core/Src/main.c:491:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/main.c:501:8:GetGPSX	32	static
+../Core/Src/main.c:537:8:GetGPSY	32	static
+../Core/Src/main.c:568:8:NMEAToDecimal	40	static
+../Core/Src/main.c:576:6:MakeMap	8	static
+../Core/Src/main.c:584:6:SetHome	8	static
+../Core/Src/main.c:597:6:MoveCharacter	72	static
+../Core/Src/main.c:649:6:BlinkLEDs	64	static
+../Core/Src/main.c:709:6:Error_Handler	4	static,ignoring_inline_asm
